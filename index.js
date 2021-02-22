@@ -15,10 +15,28 @@ ajax.onreadystatechange = function () {
         let res = this.responseText;
         res = JSON.parse(res);
         let vid = res['videobyuser'];
-        for(let i=0;vid < vid.length;i++) {
+        let card = '';
+        for(let i=0; i < vid.length;i++) {
             let itames = vid[i];
-            console.log(itames['title']);
+            const vidTitle = itames['title'];
+            const vidImg = itames['small_poster'];
+            const vidData = itames['sdate'];
+            const vidVisit= itames['visit_cnt'];
+            const vidFrame = itames['frame'];
+            card += '<div class="card">'; 
+                card += '<figure>';
+                    card += '<a href="'+ vidFrame +'">';
+                        card += '<img src="'+ vidImg +'" alt="">';
+                        card += '<figcaption>'+ vidTitle +'</figcaption>';
+                    card += '</a>';
+                card += '</figure>';
+                card += '<div class="bottom">';
+                    card += '<span>'+vidVisit+'</span>';
+                    card += '<span>'+vidData+'</span>';
+                card += '</div>';
+            card += '</div>'; 
         }
+        document.getElementById('con').innerHTML = card;
     }
 }
 ajax.open('GET', url , true);
